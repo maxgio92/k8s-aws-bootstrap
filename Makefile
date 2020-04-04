@@ -3,23 +3,33 @@ IAC_PATH=./iac/
 TARGET_INIT=init
 TARGET_CLUSTER=cluster
 TARGET_CLEAN=clean
+TARGET_OUTPUT=output
+TARGET_PKI=pki
 TARGET_ALL=all
 DEFAULT_TARGET=$(TARGET_ALL)
 
 TERRAFORM_ENV_VARS+=AWS_PROFILE=$(AWS_PROFILE)
 TERRAFORM_ENV_VARS+=AWS_SDK_LOAD_CONFIG=1
 
-.PHONY: $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_CLEAN) $(TARGET_OUTPUT) $(TARGET_ALL)
+.PHONY: $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_CLEAN) $(TARGET_OUTPUT) $(TARGET_ALL) $(TARGET_PKI)
 
 .DEFAULT_GOAL := $(DEFAULT_TARGET)
 
 $(TARGET_INIT):
-	cd $(IAC_PATH) && $(TERRAFORM_ENV_VARS) terraform init
+	cd $(IAC_PATH) && \
+		$(TERRAFORM_ENV_VARS) terraform init
 $(TARGET_CLUSTER):
-	cd $(IAC_PATH) && $(TERRAFORM_ENV_VARS) terraform apply
+	cd $(IAC_PATH) && \
+		$(TERRAFORM_ENV_VARS) terraform apply
 $(TARGET_CLEAN):
-	cd $(IAC_PATH) && $(TERRAFORM_ENV_VARS) terraform destroy
+	cd $(IAC_PATH) && \
+		$(TERRAFORM_ENV_VARS) terraform destroy
 $(TARGET_OUTPUT):
-	cd $(IAC_PATH) && $(TERRAFORM_ENV_VARS) terraform output
-$(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER)
+	cd $(IAC_PATH) && \
+		$(TERRAFORM_ENV_VARS) terraform output
+$(TARGET_PKI):
+	./scripts/pki/ca.sh && \
+    ./scripts/pki/admin.sh && \
+    ./scripts/pki/kubelet.sh
+$(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI)
 
