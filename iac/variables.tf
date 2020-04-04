@@ -48,13 +48,11 @@ variable "tags" {
 
 variable "cluster_master_size" {
   type        = number
-  default     = 1
   description = "Number of cluster nodes"
 }
 
 variable "cluster_worker_size" {
   type        = number
-  default     = 1
   description = "Number of cluster nodes"
 }
 
