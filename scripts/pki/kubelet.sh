@@ -17,10 +17,6 @@ while [ "$n" -lt "$WORKERS_COUNT" ]; do
   WORKER_PUBLIC_IP=`echo $WORKERS_PUBLIC_IPS | jq ".[${n}]" | tr -d '"'`
   WORKER_PRIVATE_IP=`echo $WORKERS_PRIVATE_IPS | jq ".[${n}]" | tr -d '"'`
 
-  echo $WORKER_NAME
-  echo $WORKER_PUBLIC_IP
-  echo $WORKER_PRIVATE_IP
-
   cat > $PKI_DIR/${WORKER_NAME}-csr.json <<EOF
 {
   "CN": "system:node:${WORKER_NAME}",
