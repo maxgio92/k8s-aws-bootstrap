@@ -31,7 +31,9 @@ $(TARGET_CLUSTER_CLEAN):
 $(TARGET_PKI):
 	./scripts/pki/ca.sh && \
 	./scripts/pki/admin.sh && \
-	./scripts/pki/kubelet.sh
+	./scripts/pki/kubelet.sh && \
+	./scripts/pki/controller-manager.sh && \
+	./scripts/pki/kube-proxy.sh
 $(TARGET_CLEAN): $(TARGET_CLUSTER_CLEAN)
 $(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI)
 
