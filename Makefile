@@ -33,7 +33,8 @@ $(TARGET_PKI):
 	./scripts/pki/admin.sh && \
 	./scripts/pki/kubelet.sh && \
 	./scripts/pki/controller-manager.sh && \
-	./scripts/pki/kube-proxy.sh
+	./scripts/pki/kube-proxy.sh && \
+	./scripts/pki/kube-scheduler.sh
 $(TARGET_CLEAN): $(TARGET_CLUSTER_CLEAN)
 $(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI)
 
