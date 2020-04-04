@@ -28,6 +28,8 @@ resource "aws_instance" "cluster_master_node" {
   root_block_device {
     volume_size = var.cluster_master_disk_size
   }
+  subnet_id              = module.subnets.public_subnet_ids[0]
+  vpc_security_group_ids = [aws_security_group.cluster_master_nodes.id]
 
   tags = local.tags
 }
@@ -40,6 +42,40 @@ resource "aws_instance" "cluster_worker_node" {
   instance_type = var.cluster_worker_instance_type
   root_block_device {
     volume_size = var.cluster_worker_disk_size
+  }
+  subnet_id              = module.subnets.public_subnet_ids[0]
+  vpc_security_group_ids = [aws_security_group.cluster_worker_nodes.id]
+
+  tags = local.tags
+}
+
+resource "aws_security_group" "cluster_master_nodes" {
+  name        = "${local.label}-cluster-master-nodes"
+  description = "Allow basic traffic to ${local.label} cluster master nodes"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description = "Allow SSH from Internet"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.cluster_ssh_allowed_ip_class]
+  }
+
+  tags = local.tags
+}
+
+resource "aws_security_group" "cluster_worker_nodes" {
+  name        = "${local.label}-cluster-worker-nodes"
+  description = "Allow basic traffic to ${local.label} cluster worker nodes"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description = "Allow SSH from Internet"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.cluster_ssh_allowed_ip_class]
   }
 
   tags = local.tags

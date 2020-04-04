@@ -87,3 +87,9 @@ variable "cluster_ssh_keypair_public_key_path" {
   default     = "~/.ssh/id_rsa.pub"
   description = "The path of the public key to associate to the SSH key pair of the cluster EC2 instances"
 }
+
+variable "cluster_ssh_allowed_ip_class" {
+  type        = string
+  default     = "0.0.0.0/0"
+  description = "The IP class allowed to connect via SSH to the cluster nodes"
+}
