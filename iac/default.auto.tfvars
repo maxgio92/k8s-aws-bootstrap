@@ -1,6 +1,6 @@
 region = "eu-west-1"
 
-availability_zones = ["eu-west-1a", "eu-west-1b"]
+availability_zones = ["eu-west-1a"]
 
 vpc_cidr_block = "172.16.0.0/16"
 
