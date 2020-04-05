@@ -2,8 +2,8 @@
 
 set -e
 
-PKI_DIR=./data/pki
-TERRAFORM_BIN=terraform
+source "`pwd`/scripts/pki/__helpers.sh"
+
 WORKERS_PUBLIC_IPS_VARNAME=cluster_worker_nodes_public_ips
 WORKERS_PRIVATE_IPS_VARNAME=cluster_worker_nodes_private_ips
 WORKERS_COUNT_VARNAME=cluster_worker_size

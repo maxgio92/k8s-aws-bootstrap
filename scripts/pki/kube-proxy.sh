@@ -2,7 +2,7 @@
 
 set -e
 
-PKI_DIR=./data/pki
+source "`pwd`/scripts/pki/__helpers.sh"
 
 cat > $PKI_DIR/kube-proxy-csr.json <<EOF
 {
