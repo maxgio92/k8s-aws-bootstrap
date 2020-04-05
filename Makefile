@@ -9,6 +9,7 @@ TARGET_PKI=pki
 TARGET_ALL=all
 DEFAULT_TARGET=$(TARGET_ALL)
 
+TERRAFORM_BIN=terraform
 TERRAFORM_ENV_VARS+=AWS_PROFILE=$(AWS_PROFILE)
 TERRAFORM_ENV_VARS+=AWS_SDK_LOAD_CONFIG=1
 
@@ -18,21 +19,21 @@ TERRAFORM_ENV_VARS+=AWS_SDK_LOAD_CONFIG=1
 
 $(TARGET_INIT):
 	cd $(IAC_PATH) && \
-		$(TERRAFORM_ENV_VARS) terraform init
+		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) init
 $(TARGET_CLUSTER):
 	cd $(IAC_PATH) && \
-		$(TERRAFORM_ENV_VARS) terraform apply
+		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) apply
 $(TARGET_CLUSTER_OUTPUT):
 	cd $(IAC_PATH) && \
-		$(TERRAFORM_ENV_VARS) terraform output
+		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) output
 $(TARGET_CLUSTER_CLEAN):
 	cd $(IAC_PATH) && \
-		$(TERRAFORM_ENV_VARS) terraform destroy
+		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) destroy
 $(TARGET_PKI):
 	./scripts/pki/ca.sh && \
 	./scripts/pki/admin.sh && \
 	./scripts/pki/kubelet.sh && \
-	./scripts/pki/controller-manager.sh && \
+	./scripts/pki/kube-controller-manager.sh && \
 	./scripts/pki/kube-proxy.sh && \
 	./scripts/pki/kube-scheduler.sh
 $(TARGET_CLEAN): $(TARGET_CLUSTER_CLEAN)
