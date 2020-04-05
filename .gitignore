@@ -1,0 +1,5 @@
+/data/pki/*
+*.pem
+*.crt
+*.csr
+*-crs.json

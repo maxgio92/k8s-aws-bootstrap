@@ -2,24 +2,42 @@ IAC_PATH=./iac/
 
 TARGET_INIT=init
 TARGET_CLUSTER=cluster
+TARGET_OUTPUT=output
+TARGET_PKI=pki
 TARGET_CLEAN=clean
 TARGET_ALL=all
 DEFAULT_TARGET=$(TARGET_ALL)
 
+TERRAFORM_BIN=terraform
 TERRAFORM_ENV_VARS+=AWS_PROFILE=$(AWS_PROFILE)
 TERRAFORM_ENV_VARS+=AWS_SDK_LOAD_CONFIG=1
 
-.PHONY: $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_CLEAN) $(TARGET_OUTPUT) $(TARGET_ALL)
+.PHONY: $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_CLUSTER_OUTPUT) $(TARGET_CLUSTER_CLEAN) $(TARGET_PKI) $(TARGET_CLEAN) $(TARGET_ALL)
 
 .DEFAULT_GOAL := $(DEFAULT_TARGET)
 
 $(TARGET_INIT):
-	cd $(IAC_PATH) && $(TERRAFORM_ENV_VARS) terraform init
+	cd $(IAC_PATH) && \
+		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) init
 $(TARGET_CLUSTER):
-	cd $(IAC_PATH) && $(TERRAFORM_ENV_VARS) terraform apply
-$(TARGET_CLEAN):
-	cd $(IAC_PATH) && $(TERRAFORM_ENV_VARS) terraform destroy
+	cd $(IAC_PATH) && \
+		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) apply
 $(TARGET_OUTPUT):
-	cd $(IAC_PATH) && $(TERRAFORM_ENV_VARS) terraform output
-$(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER)
+	cd $(IAC_PATH) && \
+		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) output
+$(TARGET_PKI):
+	./scripts/pki/ca.sh && \
+	./scripts/pki/admin.sh && \
+	./scripts/pki/kubelet.sh && \
+	./scripts/pki/kube-controller-manager.sh && \
+	./scripts/pki/kube-proxy.sh && \
+	./scripts/pki/kube-scheduler.sh && \
+	./scripts/pki/kube-apiserver.sh && \
+	./scripts/pki/service-account-token-controller.sh && \
+	./scripts/pki/copy.sh
+$(TARGET_CLEAN):
+	rm data/pki/* && \
+	cd $(IAC_PATH) && \
+		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) destroy
+$(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI)
 
