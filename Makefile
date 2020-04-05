@@ -27,7 +27,7 @@ $(TARGET_OUTPUT):
 	cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) output
 $(TARGET_PKI):
-	./scripts/pki/ca.sh && \
+	@./scripts/pki/ca.sh && \
 	./scripts/pki/admin.sh && \
 	./scripts/pki/kubelet.sh && \
 	./scripts/pki/kube-controller-manager.sh && \
@@ -41,8 +41,10 @@ $(TARGET_KUBECONFIG):
     ./scripts/kubeconfig/kube-proxy.sh && \
 	./scripts/kubeconfig/kube-controller-manager.sh && \
 	./scripts/kubeconfig/kube-scheduler.sh && \
-	./scripts/kubeconfig/admin.sh
+	./scripts/kubeconfig/admin.sh && \
+	./scripts/kubeconfig/copy.sh
 $(TARGET_CLEAN):
+	@rm data/kubeconfig/* && \
 	rm data/pki/* && \
 	cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) destroy
