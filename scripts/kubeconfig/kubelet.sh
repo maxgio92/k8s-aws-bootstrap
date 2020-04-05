@@ -4,8 +4,6 @@ set -eu
 
 source "`pwd`/scripts/__helpers.sh"
 
-echo $MASTER_PUBLIC_IP
-
 n=0
 while [ "$n" -lt "$WORKERS_COUNT" ]; do
   WORKER_NAME="worker-${n}"
