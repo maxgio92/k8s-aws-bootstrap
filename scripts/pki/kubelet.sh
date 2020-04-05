@@ -2,7 +2,7 @@
 
 set -eu
 
-source "`pwd`/scripts/pki/__helpers.sh"
+source "`pwd`/scripts/__helpers.sh"
 
 n=0
 while [ "$n" -lt "$WORKERS_COUNT" ]; do

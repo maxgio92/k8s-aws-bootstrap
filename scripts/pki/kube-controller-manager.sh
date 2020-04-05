@@ -2,7 +2,7 @@
 
 set -eu
 
-source "`pwd`/scripts/pki/__helpers.sh"
+source "`pwd`/scripts/__helpers.sh"
 
 cat > $PKI_DIR/kube-controller-manager-csr.json <<EOF
 {

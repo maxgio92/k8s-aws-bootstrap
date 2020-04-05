@@ -2,7 +2,7 @@
 
 set -eu
 
-source "`pwd`/scripts/pki/__helpers.sh"
+source "`pwd`/scripts/__helpers.sh"
 
 KUBERNETES_HOSTNAMES=kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local
 
