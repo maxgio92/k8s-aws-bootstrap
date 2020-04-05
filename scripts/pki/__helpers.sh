@@ -18,3 +18,5 @@ MASTERS_COUNT_VARNAME=cluster_master_size
 MASTERS_PUBLIC_IPS=`cd ./iac && $TERRAFORM_BIN output -json -no-color $MASTERS_PUBLIC_IPS_VARNAME`
 MASTERS_PRIVATE_IPS=`cd ./iac && $TERRAFORM_BIN output -json -no-color $MASTERS_PRIVATE_IPS_VARNAME`
 MASTERS_COUNT=`cd ./iac && $TERRAFORM_BIN output -json -no-color $MASTERS_COUNT_VARNAME`
+
+USER=ubuntu
