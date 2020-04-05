@@ -1,4 +1,6 @@
-IAC_PATH=./iac/
+IAC_PATH=./iac
+SCRIPTS_PATH=./scripts
+DATA_PATH=./data
 
 TARGET_INIT=init
 TARGET_CLUSTER=cluster
@@ -30,31 +32,31 @@ $(TARGET_OUTPUT):
 	@cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) output
 $(TARGET_PKI):
-	@./scripts/pki/ca.sh && \
-	./scripts/pki/admin.sh && \
-	./scripts/pki/kubelet.sh && \
-	./scripts/pki/kube-controller-manager.sh && \
-	./scripts/pki/kube-proxy.sh && \
-	./scripts/pki/kube-scheduler.sh && \
-	./scripts/pki/kube-apiserver.sh && \
-	./scripts/pki/service-account-token-controller.sh && \
-	./scripts/pki/copy.sh
+	@$(SCRIPTS_PATH)/pki/ca.sh && \
+	$(SCRIPTS_PATH)/pki/admin.sh && \
+	$(SCRIPTS_PATH)/pki/kubelet.sh && \
+	$(SCRIPTS_PATH)/pki/kube-controller-manager.sh && \
+	$(SCRIPTS_PATH)/pki/kube-proxy.sh && \
+	$(SCRIPTS_PATH)/pki/kube-scheduler.sh && \
+	$(SCRIPTS_PATH)/pki/kube-apiserver.sh && \
+	$(SCRIPTS_PATH)/pki/service-account-token-controller.sh && \
+	$(SCRIPTS_PATH)/pki/copy.sh
 $(TARGET_KUBECONFIG):
-	@./scripts/kubeconfig/kubelet.sh && \
-    ./scripts/kubeconfig/kube-proxy.sh && \
-	./scripts/kubeconfig/kube-controller-manager.sh && \
-	./scripts/kubeconfig/kube-scheduler.sh && \
-	./scripts/kubeconfig/admin.sh && \
-	./scripts/kubeconfig/copy.sh
+	@$(SCRIPTS_PATH)/kubeconfig/kubelet.sh && \
+    $(SCRIPTS_PATH)/kubeconfig/kube-proxy.sh && \
+	$(SCRIPTS_PATH)/kubeconfig/kube-controller-manager.sh && \
+	$(SCRIPTS_PATH)/kubeconfig/kube-scheduler.sh && \
+	$(SCRIPTS_PATH)/kubeconfig/admin.sh && \
+	$(SCRIPTS_PATH)/kubeconfig/copy.sh
 $(TARGET_CLEAN):
-	@rm -f data/kubeconfig/* && \
-	rm -f data/pki/* && \
+	@rm -f $(DATA_PATH)/kubeconfig/* && \
+	rm -f $(DATA_PATH)/pki/* && \
 	cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) destroy
 $(TARGET_ETCD):
-	@./scripts/master/etcd.sh
+	@$(SCRIPTS_PATH)/master/etcd.sh
 $(TARGET_APISERVER):
-	@./scripts/master/kube-apiserver.sh
+	@$(SCRIPTS_PATH)/master/kube-apiserver.sh
 $(TARGET_MASTER): $(TARGET_ETCD) $(TARGET_APISERVER)
 $(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI) $(TARGET_KUBECONFIG)
 
