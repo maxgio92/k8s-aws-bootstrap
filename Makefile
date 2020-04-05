@@ -18,13 +18,13 @@ TERRAFORM_ENV_VARS+=AWS_SDK_LOAD_CONFIG=1
 .DEFAULT_GOAL := $(DEFAULT_TARGET)
 
 $(TARGET_INIT):
-	cd $(IAC_PATH) && \
+	@cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) init
 $(TARGET_CLUSTER):
-	cd $(IAC_PATH) && \
+	@cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) apply
 $(TARGET_OUTPUT):
-	cd $(IAC_PATH) && \
+	@cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) output
 $(TARGET_PKI):
 	@./scripts/pki/ca.sh && \
