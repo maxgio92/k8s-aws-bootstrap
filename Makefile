@@ -44,8 +44,8 @@ $(TARGET_KUBECONFIG):
 	./scripts/kubeconfig/admin.sh && \
 	./scripts/kubeconfig/copy.sh
 $(TARGET_CLEAN):
-	@rm data/kubeconfig/* && \
-	rm data/pki/* && \
+	@rm -f data/kubeconfig/* && \
+	rm -f data/pki/* && \
 	cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) destroy
 $(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI) $(TARGET_KUBECONFIG)
