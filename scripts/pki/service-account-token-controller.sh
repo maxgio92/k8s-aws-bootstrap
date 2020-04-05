@@ -28,4 +28,4 @@ cfssl gencert \
   -ca-key=$PKI_DIR/ca-key.pem \
   -config=$PKI_DIR/ca-config.json \
   -profile=kubernetes \
-  service-account-csr.json | cfssljson -bare $PKI_DIR/service-account
+  $PKI_DIR/service-account-csr.json | cfssljson -bare $PKI_DIR/service-account
