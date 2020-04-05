@@ -30,7 +30,7 @@ while [ "$n" -lt "$WORKERS_COUNT" ]; do
 
   scp -oStrictHostKeyChecking=no -q \
       $PKI_DIR/ca.pem \
-      $PKI_DIR/worker-$n-key.pem \
+      $PKI_DIR/worker-$n-key.pem $PKI_DIR/worker-$n.pem \
       $USER@$WORKER_PUBLIC_IP:~/ 
   n=$(( n+1 ))
 done
