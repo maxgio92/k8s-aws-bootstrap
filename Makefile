@@ -2,10 +2,9 @@ IAC_PATH=./iac/
 
 TARGET_INIT=init
 TARGET_CLUSTER=cluster
-TARGET_CLUSTER_CLEAN='cluster clean'
-TARGET_CLUSTER_OUTPUT='cluster output'
-TARGET_CLEAN=clean
+TARGET_OUTPUT=output
 TARGET_PKI=pki
+TARGET_CLEAN=clean
 TARGET_ALL=all
 DEFAULT_TARGET=$(TARGET_ALL)
 
@@ -23,12 +22,9 @@ $(TARGET_INIT):
 $(TARGET_CLUSTER):
 	cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) apply
-$(TARGET_CLUSTER_OUTPUT):
+$(TARGET_OUTPUT):
 	cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) output
-$(TARGET_CLUSTER_CLEAN):
-	cd $(IAC_PATH) && \
-		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) destroy
 $(TARGET_PKI):
 	./scripts/pki/ca.sh && \
 	./scripts/pki/admin.sh && \
@@ -38,6 +34,9 @@ $(TARGET_PKI):
 	./scripts/pki/kube-scheduler.sh && \
 	./scripts/pki/kube-apiserver.sh && \
 	./scripts/pki/service-account-token-controller.sh
-$(TARGET_CLEAN): $(TARGET_CLUSTER_CLEAN)
+$(TARGET_CLEAN):
+	rm data/pki/* && \
+	cd $(IAC_PATH) && \
+		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) destroy
 $(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI)
 
