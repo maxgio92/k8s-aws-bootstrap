@@ -5,6 +5,7 @@ TARGET_CLUSTER=cluster
 TARGET_OUTPUT=output
 TARGET_PKI=pki
 TARGET_KUBECONFIG=kubeconfig
+TARGET_ETCD=etcd
 TARGET_CLEAN=clean
 TARGET_ALL=all
 DEFAULT_TARGET=$(TARGET_ALL)
@@ -18,13 +19,13 @@ TERRAFORM_ENV_VARS+=AWS_SDK_LOAD_CONFIG=1
 .DEFAULT_GOAL := $(DEFAULT_TARGET)
 
 $(TARGET_INIT):
-	cd $(IAC_PATH) && \
+	@cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) init
 $(TARGET_CLUSTER):
-	cd $(IAC_PATH) && \
+	@cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) apply
 $(TARGET_OUTPUT):
-	cd $(IAC_PATH) && \
+	@cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) output
 $(TARGET_PKI):
 	@./scripts/pki/ca.sh && \
@@ -44,9 +45,11 @@ $(TARGET_KUBECONFIG):
 	./scripts/kubeconfig/admin.sh && \
 	./scripts/kubeconfig/copy.sh
 $(TARGET_CLEAN):
-	@rm data/kubeconfig/* && \
-	rm data/pki/* && \
+	@rm -f data/kubeconfig/* && \
+	rm -f data/pki/* && \
 	cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) destroy
+$(TARGET_ETCD):
+	@./scripts/master/etcd.sh
 $(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI) $(TARGET_KUBECONFIG)
 

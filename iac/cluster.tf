@@ -3,7 +3,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
   }
 
   filter {
@@ -30,6 +30,7 @@ resource "aws_instance" "cluster_master_node" {
   }
   subnet_id              = module.subnets.public_subnet_ids[0]
   vpc_security_group_ids = [aws_security_group.cluster_master_nodes.id]
+  user_data              = templatefile("${path.module}/templates/master/user-data.tpl", { index = count.index })
 
   tags = local.tags
 }
@@ -45,6 +46,7 @@ resource "aws_instance" "cluster_worker_node" {
   }
   subnet_id              = module.subnets.public_subnet_ids[0]
   vpc_security_group_ids = [aws_security_group.cluster_worker_nodes.id]
+  user_data              = templatefile("${path.module}/templates/worker/user-data.tpl", { index = count.index })
 
   tags = local.tags
 }
@@ -62,6 +64,13 @@ resource "aws_security_group" "cluster_master_nodes" {
     cidr_blocks = [var.cluster_ssh_allowed_ip_class]
   }
 
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   tags = local.tags
 }
 
@@ -76,6 +85,13 @@ resource "aws_security_group" "cluster_worker_nodes" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = [var.cluster_ssh_allowed_ip_class]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = local.tags
