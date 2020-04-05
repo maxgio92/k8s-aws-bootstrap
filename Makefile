@@ -36,7 +36,8 @@ $(TARGET_PKI):
 	./scripts/pki/kube-controller-manager.sh && \
 	./scripts/pki/kube-proxy.sh && \
 	./scripts/pki/kube-scheduler.sh && \
-	./scripts/pki/kube-apiserver.sh
+	./scripts/pki/kube-apiserver.sh && \
+	./scripts/pki/service-account-token-controller.sh
 $(TARGET_CLEAN): $(TARGET_CLUSTER_CLEAN)
 $(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI)
 
