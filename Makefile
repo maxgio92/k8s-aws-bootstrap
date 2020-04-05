@@ -33,7 +33,8 @@ $(TARGET_PKI):
 	./scripts/pki/kube-proxy.sh && \
 	./scripts/pki/kube-scheduler.sh && \
 	./scripts/pki/kube-apiserver.sh && \
-	./scripts/pki/service-account-token-controller.sh
+	./scripts/pki/service-account-token-controller.sh && \
+	./scripts/pki/copy.sh
 $(TARGET_CLEAN):
 	rm data/pki/* && \
 	cd $(IAC_PATH) && \
