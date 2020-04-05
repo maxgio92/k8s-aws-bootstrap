@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
 PKI_DIR="`pwd`/data/pki"
 TERRAFORM_BIN=terraform
