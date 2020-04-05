@@ -4,6 +4,7 @@ TARGET_INIT=init
 TARGET_CLUSTER=cluster
 TARGET_OUTPUT=output
 TARGET_PKI=pki
+TARGET_KUBECONFIG=kubeconfig
 TARGET_CLEAN=clean
 TARGET_ALL=all
 DEFAULT_TARGET=$(TARGET_ALL)
@@ -35,6 +36,8 @@ $(TARGET_PKI):
 	./scripts/pki/kube-apiserver.sh && \
 	./scripts/pki/service-account-token-controller.sh && \
 	./scripts/pki/copy.sh
+$(TARGET_KUBECONFIG):
+	./scripts/kubeconfig/kubelet.sh
 $(TARGET_CLEAN):
 	rm data/pki/* && \
 	cd $(IAC_PATH) && \
