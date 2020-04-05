@@ -38,7 +38,8 @@ $(TARGET_PKI):
 	./scripts/pki/copy.sh
 $(TARGET_KUBECONFIG):
 	@./scripts/kubeconfig/kubelet.sh && \
-    ./scripts/kubeconfig/kube-proxy.sh
+    ./scripts/kubeconfig/kube-proxy.sh && \
+	./scripts/kubeconfig/kube-controller-manager.sh
 $(TARGET_CLEAN):
 	rm data/pki/* && \
 	cd $(IAC_PATH) && \
