@@ -5,6 +5,7 @@ TARGET_CLUSTER=cluster
 TARGET_OUTPUT=output
 TARGET_PKI=pki
 TARGET_KUBECONFIG=kubeconfig
+TARGET_ETCD=etcd
 TARGET_CLEAN=clean
 TARGET_ALL=all
 DEFAULT_TARGET=$(TARGET_ALL)
@@ -48,5 +49,7 @@ $(TARGET_CLEAN):
 	rm -f data/pki/* && \
 	cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) destroy
+$(TARGET_ETCD):
+	@./scripts/master/etcd.sh
 $(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI) $(TARGET_KUBECONFIG)
 
