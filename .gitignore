@@ -1,4 +1,5 @@
 /data/pki/*
+/data/kubeconfig/*
 *.pem
 *.crt
 *.csr

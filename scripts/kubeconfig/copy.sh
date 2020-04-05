@@ -4,7 +4,7 @@ set -eu
 
 source "`pwd`/scripts/__helpers.sh"
 
-echo -n "Uploading master certificates and keys..."
+echo -n "Uploading master kubeconfig..."
 
 n=0
 while [ "$n" -lt "$MASTERS_COUNT" ]; do
@@ -12,16 +12,16 @@ while [ "$n" -lt "$MASTERS_COUNT" ]; do
   MASTER_PRIVATE_IP=`echo $MASTERS_PRIVATE_IPS | jq ".[${n}]" | tr -d '"'`
 
   scp -oStrictHostKeyChecking=no -q \
-      $PKI_DIR/ca.pem $PKI_DIR/ca-key.pem \
-      $PKI_DIR/kubernetes-key.pem $PKI_DIR/kubernetes.pem \
-      $PKI_DIR/service-account-key.pem $PKI_DIR/service-account.pem \
+      $KUBECONFIG_DIR/admin.kubeconfig \
+      $KUBECONFIG_DIR/kube-controller-manager.kubeconfig \
+      $KUBECONFIG_DIR/kube-scheduler.kubeconfig \
       $USER@$MASTER_PUBLIC_IP:~/ 
   n=$(( n+1 ))
 done
 
 echo "Done."
 
-echo -n "Uploading worker certificates and keys..."
+echo -n "Uploading worker kubeconfig..."
 
 n=0
 while [ "$n" -lt "$WORKERS_COUNT" ]; do
@@ -29,8 +29,8 @@ while [ "$n" -lt "$WORKERS_COUNT" ]; do
   WORKER_PRIVATE_IP=`echo $WORKERS_PRIVATE_IPS | jq ".[${n}]" | tr -d '"'`
 
   scp -oStrictHostKeyChecking=no -q \
-      $PKI_DIR/ca.pem \
-      $PKI_DIR/worker-$n-key.pem $PKI_DIR/worker-$n.pem \
+      $KUBECONFIG_DIR/worker-$n.kubeconfig \
+      $KUBECONFIG_DIR/kube-proxy.kubeconfig \
       $USER@$WORKER_PUBLIC_IP:~/ 
   n=$(( n+1 ))
 done

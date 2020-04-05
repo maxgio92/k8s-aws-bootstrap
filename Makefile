@@ -4,6 +4,7 @@ TARGET_INIT=init
 TARGET_CLUSTER=cluster
 TARGET_OUTPUT=output
 TARGET_PKI=pki
+TARGET_KUBECONFIG=kubeconfig
 TARGET_CLEAN=clean
 TARGET_ALL=all
 DEFAULT_TARGET=$(TARGET_ALL)
@@ -26,7 +27,7 @@ $(TARGET_OUTPUT):
 	cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) output
 $(TARGET_PKI):
-	./scripts/pki/ca.sh && \
+	@./scripts/pki/ca.sh && \
 	./scripts/pki/admin.sh && \
 	./scripts/pki/kubelet.sh && \
 	./scripts/pki/kube-controller-manager.sh && \
@@ -35,9 +36,17 @@ $(TARGET_PKI):
 	./scripts/pki/kube-apiserver.sh && \
 	./scripts/pki/service-account-token-controller.sh && \
 	./scripts/pki/copy.sh
+$(TARGET_KUBECONFIG):
+	@./scripts/kubeconfig/kubelet.sh && \
+    ./scripts/kubeconfig/kube-proxy.sh && \
+	./scripts/kubeconfig/kube-controller-manager.sh && \
+	./scripts/kubeconfig/kube-scheduler.sh && \
+	./scripts/kubeconfig/admin.sh && \
+	./scripts/kubeconfig/copy.sh
 $(TARGET_CLEAN):
+	@rm data/kubeconfig/* && \
 	rm data/pki/* && \
 	cd $(IAC_PATH) && \
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) destroy
-$(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI)
+$(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI) $(TARGET_KUBECONFIG)
 
