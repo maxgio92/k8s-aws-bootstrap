@@ -4,13 +4,6 @@ set -eu
 
 source "`pwd`/scripts/pki/__helpers.sh"
 
-WORKERS_PUBLIC_IPS_VARNAME=cluster_worker_nodes_public_ips
-WORKERS_PRIVATE_IPS_VARNAME=cluster_worker_nodes_private_ips
-WORKERS_COUNT_VARNAME=cluster_worker_size
-WORKERS_PUBLIC_IPS=`cd ./iac && $TERRAFORM_BIN output -json -no-color $WORKERS_PUBLIC_IPS_VARNAME`
-WORKERS_PRIVATE_IPS=`cd ./iac && $TERRAFORM_BIN output -json -no-color $WORKERS_PRIVATE_IPS_VARNAME`
-WORKERS_COUNT=`cd ./iac && $TERRAFORM_BIN output -json -no-color $WORKERS_COUNT_VARNAME`
-
 n=0
 while [ "$n" -lt "$WORKERS_COUNT" ]; do
   WORKER_NAME="worker-${n}"

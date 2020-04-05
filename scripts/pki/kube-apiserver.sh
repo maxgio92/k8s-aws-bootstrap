@@ -4,12 +4,6 @@ set -eu
 
 source "`pwd`/scripts/pki/__helpers.sh"
 
-MASTERS_PUBLIC_IPS_VARNAME=cluster_master_nodes_public_ips
-MASTERS_PRIVATE_IPS_VARNAME=cluster_master_nodes_private_ips
-MASTERS_COUNT_VARNAME=cluster_master_size
-MASTERS_PUBLIC_IPS=`cd ./iac && $TERRAFORM_BIN output -json -no-color $MASTERS_PUBLIC_IPS_VARNAME`
-MASTERS_PRIVATE_IPS=`cd ./iac && $TERRAFORM_BIN output -json -no-color $MASTERS_PRIVATE_IPS_VARNAME`
-MASTERS_COUNT=`cd ./iac && $TERRAFORM_BIN output -json -no-color $MASTERS_COUNT_VARNAME`
 KUBERNETES_HOSTNAMES=kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local
 
 MASTERS_PUBLIC_IPS=${MASTERS_PUBLIC_IPS//[}
