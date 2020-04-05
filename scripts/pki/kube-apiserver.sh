@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eux
+set -eu
 
 source "`pwd`/scripts/pki/__helpers.sh"
 
@@ -18,9 +18,6 @@ MASTERS_PUBLIC_IPS=${MASTERS_PUBLIC_IPS//\"}
 MASTERS_PRIVATE_IPS=${MASTERS_PRIVATE_IPS//[}
 MASTERS_PRIVATE_IPS=${MASTERS_PRIVATE_IPS//]}
 MASTERS_PRIVATE_IPS=${MASTERS_PRIVATE_IPS//\"}
-
-echo $MASTERS_PUBLIC_IPS
-echo $MASTERS_PRIVATE_IPS
 
 cat > $PKI_DIR/kubernetes-csr.json <<EOF
 {
