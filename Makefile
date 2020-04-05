@@ -6,6 +6,7 @@ TARGET_OUTPUT=output
 TARGET_PKI=pki
 TARGET_KUBECONFIG=kubeconfig
 TARGET_ETCD=etcd
+TARGET_APISERVER=apiserver
 TARGET_CLEAN=clean
 TARGET_ALL=all
 DEFAULT_TARGET=$(TARGET_ALL)
@@ -51,5 +52,7 @@ $(TARGET_CLEAN):
 		$(TERRAFORM_ENV_VARS) $(TERRAFORM_BIN) destroy
 $(TARGET_ETCD):
 	@./scripts/master/etcd.sh
+$(TARGET_APISERVER):
+	@./scripts/master/kube-apiserver.sh
 $(TARGET_ALL): $(TARGET_INIT) $(TARGET_CLUSTER) $(TARGET_PKI) $(TARGET_KUBECONFIG)
 
