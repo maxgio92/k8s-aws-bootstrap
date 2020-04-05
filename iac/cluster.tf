@@ -30,6 +30,7 @@ resource "aws_instance" "cluster_master_node" {
   }
   subnet_id              = module.subnets.public_subnet_ids[0]
   vpc_security_group_ids = [aws_security_group.cluster_master_nodes.id]
+  user_data              = templatefile("${path.module}/templates/master/user-data.tpl", { index = count.index })
 
   tags = local.tags
 }
@@ -45,6 +46,7 @@ resource "aws_instance" "cluster_worker_node" {
   }
   subnet_id              = module.subnets.public_subnet_ids[0]
   vpc_security_group_ids = [aws_security_group.cluster_worker_nodes.id]
+  user_data              = templatefile("${path.module}/templates/worker/user-data.tpl", { index = count.index })
 
   tags = local.tags
 }
