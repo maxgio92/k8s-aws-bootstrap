@@ -12,7 +12,7 @@ while [ "$n" -lt "$MASTERS_COUNT" ]; do
   MASTER_PRIVATE_IP=`echo $MASTERS_PRIVATE_IPS | jq ".[${n}]" | tr -d '"'`
 
   scp -oStrictHostKeyChecking=no -q \
-      `pwd`/scripts/master/configure-etcd.sh \
+      `pwd`/scripts/master/etcd/configure.sh \
       $USER@$MASTER_PUBLIC_IP:
   ssh -oStrictHostKeyChecking=no -q \
       $USER@$MASTER_PUBLIC_IP \
