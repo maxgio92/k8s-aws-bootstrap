@@ -15,7 +15,7 @@ variable "vpc_cidr_block" {
 
 variable "pod_cidr_block" {
   type        = string
-  default     = "10.200.0.0/24"
+  default     = "10.200.0.0/16"
   description = "Pod CIDR block"
 }
 
