@@ -91,3 +91,16 @@ variable "cluster_ssh_allowed_ip_class" {
   default     = "0.0.0.0/0"
   description = "The IP class allowed to connect via SSH to the cluster nodes"
 }
+
+variable "cluster_apiserver_port" {
+  type        = number
+  default     = 6443
+  description = "The port the API server listens on externally"
+}
+
+variable "cluster_apiserver_allowed_ip_class" {
+  type        = string
+  default     = "0.0.0.0/0"
+  description = "The IP class allowed to connect to the API server"
+}
+

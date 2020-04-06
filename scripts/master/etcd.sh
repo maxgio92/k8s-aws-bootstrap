@@ -9,11 +9,10 @@ echo -n "Configure and start etcd server on master nodes..."
 n=0
 while [ "$n" -lt "$MASTERS_COUNT" ]; do
   MASTER_PUBLIC_IP=`echo $MASTERS_PUBLIC_IPS | jq ".[${n}]" | tr -d '"'`
-  MASTER_PRIVATE_IP=`echo $MASTERS_PRIVATE_IPS | jq ".[${n}]" | tr -d '"'`
 
   scp -oStrictHostKeyChecking=no -q \
       `pwd`/scripts/master/etcd/configure.sh \
-      $USER@$MASTER_PUBLIC_IP:
+      $USER@$MASTER_PUBLIC_IP:configure-etcd.sh
   ssh -oStrictHostKeyChecking=no -q \
       $USER@$MASTER_PUBLIC_IP \
       ./configure-etcd.sh

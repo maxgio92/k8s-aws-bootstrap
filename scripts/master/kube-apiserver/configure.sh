@@ -2,19 +2,21 @@
 
 set -eu
 
-# Download etcd binaries
+# Download kube-apiserver binaries
 wget -q --https-only --timestamping \
   "https://storage.googleapis.com/kubernetes-release/release/v1.15.3/bin/linux/amd64/kube-apiserver"
 
 chmod +x kube-apiserver
 sudo mv kube-apiserver /usr/local/bin/
+sudo chown root:root /usr/local/bin/kube-apiserver
 
-# Configure etcd
+# Configure kube-apiserver
 sudo mkdir -p /var/lib/kubernetes/
 sudo mv ca.pem ca-key.pem \
   kubernetes-key.pem kubernetes.pem \
   service-account-key.pem service-account.pem \
   /var/lib/kubernetes/
+sudo chown root:root /var/lib/kubernetes/*.pem
 
 PRIVATE_IP=`curl -s http://169.254.169.254/latest/meta-data/local-ipv4/`
 
@@ -58,3 +60,6 @@ RestartSec=5
 [Install]
 WantedBy=multi-user.target
 EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable kube-apiserver

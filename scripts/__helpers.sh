@@ -6,7 +6,7 @@ PKI_DIR="`pwd`/data/pki"
 KUBECONFIG_DIR="`pwd`/data/kubeconfig"
 TERRAFORM_BIN=terraform
 USER=ubuntu
-APISERVER_PORT=8443
+APISERVER_PORT=6443
 KUBECONFIG_CLUSTER_NAME=k8s-aws-bootstrap
 
 WORKERS_PUBLIC_IPS_VARNAME=cluster_worker_nodes_public_ips

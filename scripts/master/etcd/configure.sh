@@ -7,10 +7,12 @@ wget -q --https-only --timestamping \
       "https://github.com/etcd-io/etcd/releases/download/v3.4.0/etcd-v3.4.0-linux-amd64.tar.gz"
 tar -xvf etcd-v3.4.0-linux-amd64.tar.gz
 sudo mv etcd-v3.4.0-linux-amd64/etcd* /usr/local/bin/
+sudo chown root:root /usr/local/bin/etcd*
 
 # Configure etcd
 sudo mkdir -p /etc/etcd /var/lib/etcd
 sudo cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd/
+sudo chown root:root /etc/etcd/*.pem
 
 PRIVATE_IP=`curl -s http://169.254.169.254/latest/meta-data/local-ipv4/`
 ETCD_NAME=`hostname -s`

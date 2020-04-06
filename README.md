@@ -16,7 +16,7 @@
 
 `make pki`
 
-### Generate kubeconfigs for clients
+### Generate kubeconfigs
 
 `make kubeconfig`
 
@@ -30,6 +30,25 @@
 `make etcd`
 
 `make apiserver`
+
+`make controllermanager`
+
+`make scheduler`
+
+`make kubectl`
+
+`make kubeletauth`
+
+### Configure and bootstrap worker components
+
+#### General
+`make worker`
+
+#### Specific
+
+`make workerdeps`
+
+`make cni`
 
 
 ## Cleanup

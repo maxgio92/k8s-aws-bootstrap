@@ -57,7 +57,7 @@ resource "aws_security_group" "cluster_master_nodes" {
   vpc_id      = module.vpc.vpc_id
 
   ingress {
-    description = "Allow SSH from Internet"
+    description = "Allow SSH from ${var.cluster_ssh_allowed_ip_class}"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -74,13 +74,23 @@ resource "aws_security_group" "cluster_master_nodes" {
   tags = local.tags
 }
 
+resource "aws_security_group_rule" "cluster_apiserver" {
+  description       = "Allow traffic to ${local.label} API server"
+  type              = "ingress"
+  from_port         = var.cluster_apiserver_port
+  to_port           = var.cluster_apiserver_port
+  protocol          = "tcp"
+  cidr_blocks       = [var.cluster_apiserver_allowed_ip_class]
+  security_group_id = aws_security_group.cluster_master_nodes.id
+}
+
 resource "aws_security_group" "cluster_worker_nodes" {
   name        = "${local.label}-cluster-worker-nodes"
   description = "Allow basic traffic to ${local.label} cluster worker nodes"
   vpc_id      = module.vpc.vpc_id
 
   ingress {
-    description = "Allow SSH from Internet"
+    description = "Allow SSH from ${var.cluster_ssh_allowed_ip_class}"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
