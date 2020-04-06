@@ -13,6 +13,12 @@ variable "vpc_cidr_block" {
   description = "VPC CIDR block"
 }
 
+variable "pod_cidr_block" {
+  type        = string
+  default     = "10.200.0.0/24"
+  description = "Pod CIDR block"
+}
+
 variable "namespace" {
   type        = string
   description = "Namespace, which could be your organization name, e.g. 'eg' or 'cp'"
