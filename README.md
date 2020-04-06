@@ -20,9 +20,14 @@
 
 `make kubeconfig`
 
+### Configure common components
+
+`make kubectl`
+
 ### Configure and bootstrap master components
 
 #### General
+
 `make master`
 
 #### Specific
@@ -42,6 +47,7 @@
 ### Configure and bootstrap worker components
 
 #### General
+
 `make worker`
 
 #### Specific
@@ -50,6 +56,11 @@
 
 `make cni`
 
+`make cr`
+
+`make kubelet`
+
+`make kubeproxy`
 
 ## Cleanup
 
