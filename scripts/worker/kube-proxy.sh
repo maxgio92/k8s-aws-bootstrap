@@ -15,7 +15,7 @@ while [ "$n" -lt "$WORKERS_COUNT" ]; do
       $USER@$WORKER_PUBLIC_IP:configure-kube-proxy.sh
   ssh -oStrictHostKeyChecking=no -q \
       $USER@$WORKER_PUBLIC_IP \
-      ./configure-kube-proxy.sh $n
+      ./configure-kube-proxy.sh "${POD_CIDR}"
   ssh -oStrictHostKeyChecking=no -q \
       $USER@$WORKER_PUBLIC_IP \
       sudo systemctl start kube-proxy
