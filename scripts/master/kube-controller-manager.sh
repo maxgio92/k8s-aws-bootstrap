@@ -15,7 +15,7 @@ while [ "$n" -lt "$MASTERS_COUNT" ]; do
       $USER@$MASTER_PUBLIC_IP:configure-kube-controller-manager.sh
   ssh -oStrictHostKeyChecking=no -q \
       $USER@$MASTER_PUBLIC_IP \
-      ./configure-kube-controller-manager.sh
+      ./configure-kube-controller-manager.sh "${POD_CIDR}"
   ssh -oStrictHostKeyChecking=no -q \
       $USER@$MASTER_PUBLIC_IP \
       sudo systemctl start kube-controller-manager
