@@ -23,10 +23,3 @@ module "subnets" {
   nat_instance_enabled = false
   tags                 = local.tags
 }
-
-resource "aws_route" "pods_to_worker_nodes" {
-  count                  = length(aws_instance.cluster_worker_node)
-  route_table_id         = module.subnets.public_route_table_ids[0]
-  destination_cidr_block = cidrsubnet(var.pod_cidr_block, 8, count.index)
-  instance_id            = aws_instance.cluster_worker_node[count.index].id
-}
