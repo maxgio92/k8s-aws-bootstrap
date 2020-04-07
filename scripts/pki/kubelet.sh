@@ -6,7 +6,7 @@ source "`pwd`/scripts/__helpers.sh"
 
 n=0
 while [ "$n" -lt "$WORKERS_COUNT" ]; do
-  WORKER_NAME="worker-${n}"
+  WORKER_NAME=`echo $WORKERS_PRIVATE_DNS | jq ".[${n}]" | tr -d '"'`
   WORKER_PUBLIC_IP=`echo $WORKERS_PUBLIC_IPS | jq ".[${n}]" | tr -d '"'`
   WORKER_PRIVATE_IP=`echo $WORKERS_PRIVATE_IPS | jq ".[${n}]" | tr -d '"'`
 
