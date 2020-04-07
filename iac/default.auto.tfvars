@@ -1,6 +1,6 @@
 region = "eu-west-1"
 
-vpc_cidr_block = "172.16.0.0/16"
+vpc_cidr_block = "10.240.0.0/16"
 
 namespace = "maxgio92"
 
