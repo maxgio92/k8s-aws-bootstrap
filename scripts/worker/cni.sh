@@ -19,5 +19,3 @@ while [ "$n" -lt "$WORKERS_COUNT" ]; do
 
   n=$(( n+1 ))
 done
-
-echo "Done."

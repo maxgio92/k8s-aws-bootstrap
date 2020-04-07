@@ -8,6 +8,7 @@ TERRAFORM_BIN=terraform
 USER=ubuntu
 APISERVER_PORT=6443
 KUBECONFIG_CLUSTER_NAME=k8s-aws-bootstrap
+POD_CIDR="10.200.0.0/16"
 
 WORKERS_PUBLIC_IPS_VARNAME=cluster_worker_nodes_public_ips
 WORKERS_PRIVATE_IPS_VARNAME=cluster_worker_nodes_private_ips
