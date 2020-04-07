@@ -7,3 +7,5 @@ sudo apt-get update && \
   socat \
   conntrack \
   ipset
+
+sudo swapoff -a
