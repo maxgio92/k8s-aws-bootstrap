@@ -1,14 +1,12 @@
 region = "eu-west-1"
 
-availability_zones = ["eu-west-1a"]
-
 vpc_cidr_block = "172.16.0.0/16"
 
-namespace = "sample"
+namespace = "maxgio92"
 
-stage = "k8s"
+stage = "labs"
 
-name = "k8s-bootstrap"
+name = "k8sawsbtstrp"
 
 cluster_master_size = 1
 
