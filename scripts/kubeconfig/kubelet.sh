@@ -6,7 +6,7 @@ source "`pwd`/scripts/__helpers.sh"
 
 n=0
 while [ "$n" -lt "$WORKERS_COUNT" ]; do
-  WORKER_NAME="worker-${n}"
+  WORKER_NAME=`echo $WORKERS_PRIVATE_DNS | jq ".[${n}]" | tr -d '"'`
 
   kubectl config set-cluster $KUBECONFIG_CLUSTER_NAME \
     --certificate-authority=$PKI_DIR/ca.pem \

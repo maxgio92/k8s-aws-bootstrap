@@ -22,11 +22,11 @@ cat > $PKI_DIR/kubernetes-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "IT",
+      "L": "Fano",
       "O": "Kubernetes",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "k8s-aws-bootstrap",
+      "ST": "Italy"
     }
   ]
 }

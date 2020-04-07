@@ -3,7 +3,7 @@
 set -eu
 
 INDEX=$1
-WORKER_NAME="worker-${INDEX}"
+WORKER_NAME=`curl -s http://169.254.169.254/latest/meta-data/hostname/`
 WORKER_POD_CIDR="10.200.${INDEX}.0/24"
 
 # Download the kubelet binaries
