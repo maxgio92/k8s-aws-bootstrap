@@ -3,14 +3,15 @@ variable "region" {
   description = "AWS Region"
 }
 
-variable "availability_zones" {
-  type        = list(string)
-  description = "List of availability zones"
-}
-
 variable "vpc_cidr_block" {
   type        = string
   description = "VPC CIDR block"
+}
+
+variable "pod_cidr_block" {
+  type        = string
+  default     = "10.200.0.0/16"
+  description = "Pod CIDR block"
 }
 
 variable "namespace" {
