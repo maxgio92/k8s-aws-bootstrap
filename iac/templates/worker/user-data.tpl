@@ -1,11 +1,4 @@
 #!/usr/bin/env bash
 
-hostname "worker-${index}"
-echo "worker-${index}" > /etc/hostname
-
-# Worker dependencies
-apt-get update && \
-  apt-get -y install socat conntrack ipset
-
-# Disable swap for kubelet
-swapoff -a
+HOSTNAME=`curl -s http://169.254.169.254/latest/meta-data/hostname/`
+hostnamectl set-hostname $HOSTNAME
