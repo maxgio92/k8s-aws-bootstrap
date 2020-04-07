@@ -29,6 +29,7 @@ resource "aws_instance" "cluster_master_node" {
     volume_size = var.cluster_master_disk_size
   }
   subnet_id              = module.subnets.public_subnet_ids[0]
+  private_ip             = cidrhost(module.subnets.public_subnet_cidrs[0], (count.index + 10))
   vpc_security_group_ids = [aws_security_group.cluster_master_nodes.id]
   user_data              = templatefile("${path.module}/templates/master/user-data.tpl", { index = count.index })
 
@@ -44,6 +45,7 @@ resource "aws_instance" "cluster_worker_node" {
   root_block_device {
     volume_size = var.cluster_worker_disk_size
   }
+  private_ip             = cidrhost(module.subnets.public_subnet_cidrs[0], (count.index + 20))
   subnet_id              = module.subnets.public_subnet_ids[0]
   vpc_security_group_ids = [aws_security_group.cluster_worker_nodes.id]
   user_data              = templatefile("${path.module}/templates/worker/user-data.tpl", { index = count.index })
