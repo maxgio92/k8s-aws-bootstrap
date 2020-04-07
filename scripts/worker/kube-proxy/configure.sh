@@ -2,6 +2,8 @@
 
 set -eu
 
+POD_CIDR=$1
+
 # Download the kube-proxy binaries
 
 wget -q --https-only --timestamping \
@@ -23,7 +25,7 @@ apiVersion: kubeproxy.config.k8s.io/v1alpha1
 clientConnection:
   kubeconfig: "/var/lib/kube-proxy/kubeconfig"
 mode: "iptables"
-clusterCIDR: "10.200.0.0/16"
+clusterCIDR: "${POD_CIDR}"
 EOF
 
 cat <<EOF | sudo tee /etc/systemd/system/kube-proxy.service
