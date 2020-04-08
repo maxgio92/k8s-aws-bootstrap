@@ -1,5 +1,11 @@
 # Kubernetes AWS Bootstrap
 
+## Requirements
+
+- bash==5.0
+- terraform==0.12
+- kubectl==1.15
+
 ## Step by step guide
 
 ### Provision the infrastructure
