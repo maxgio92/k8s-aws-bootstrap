@@ -67,6 +67,7 @@ $(TARGET_KUBECONFIG):
 	$(SCRIPTS_PATH)/kubeconfig/kube-controller-manager.sh && \
 	$(SCRIPTS_PATH)/kubeconfig/kube-scheduler.sh && \
 	$(SCRIPTS_PATH)/kubeconfig/admin.sh && \
+	$(SCRIPTS_PATH)/kubeconfig/admin-remote.sh && \
 	$(SCRIPTS_PATH)/kubeconfig/copy.sh
 $(TARGET_KUBECTL):
 	@$(SCRIPTS_PATH)/common/kubectl.sh
