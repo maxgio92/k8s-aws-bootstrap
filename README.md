@@ -77,3 +77,10 @@
 #### Output infrastruture details
 
 `make output`
+
+## Talk with Kubernetes remotely
+
+```
+export KUBECONFIG=./data/kubeconfig/admin-remote.kubeconfig
+kubectl {command}
+```
